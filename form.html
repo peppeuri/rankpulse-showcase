@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8"/>
+  <title>RankPulse — Richiedi Accesso Pilota</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0a0a0f"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+:root{
+  --bg:#0a0a0f;--bg-el:#111118;--text:#f0f0f5;--border:#222230;
+  --cyan:#00e5ff;
+  --ff:'Inter',-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh}
+body{
+  font-family:var(--ff);background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem;
+}
+
+.form-wrap{
+  width:100%;max-width:520px;
+  background:var(--bg-el);border:1px solid var(--border);
+  border-radius:16px;padding:clamp(1.5rem,4vw,2.5rem);
+}
+.form-header{margin-bottom:2rem}
+.form-header .logo{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1.2rem}
+.form-header .logo .a{color:var(--cyan)}
+.form-header h1{
+  font-size:clamp(1.4rem,3vw,1.8rem);font-weight:700;letter-spacing:-0.03em;
+  line-height:1.2;
+}
+.form-header p{font-size:.85rem;color:rgba(240,240,245,.5);margin-top:.5rem}
+
+.field{margin-bottom:1.1rem}
+.field label{
+  display:block;font-size:.72rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(240,240,245,.5);margin-bottom:.4rem;
+}
+.field label .req{color:var(--cyan);margin-left:2px}
+.field input,.field textarea{
+  width:100%;background:transparent;
+  border:none;border-bottom:1px solid var(--border);
+  color:var(--text);font-family:var(--ff);font-size:.9rem;
+  padding:.6rem 0;outline:none;transition:border-color .3s;
+}
+.field input:focus,.field textarea:focus{border-color:var(--cyan)}
+.field textarea{resize:vertical;min-height:100px;border:1px solid var(--border);border-radius:8px;padding:.6rem .8rem;margin-top:.2rem}
+.field textarea:focus{border-color:var(--cyan)}
+
+.row{display:flex;gap:1rem}
+.row .field{flex:1}
+
+.btn-submit{
+  margin-top:1.5rem;width:100%;
+  padding:.8rem;border:none;border-radius:100px;
+  background:var(--text);color:var(--bg);
+  font-family:var(--ff);font-size:.8rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;transition:background .3s,transform .2s;
+}
+.btn-submit:hover{background:var(--cyan);color:var(--bg);transform:scale(1.01)}
+.btn-submit:active{transform:scale(.98)}
+
+.back-link{
+  display:block;text-align:center;margin-top:1.2rem;
+  font-size:.75rem;color:rgba(240,240,245,.35);text-decoration:none;
+  transition:color .3s;
+}
+.back-link:hover{color:var(--text)}
+
+.field.error input,.field.error textarea{border-color:#ff6b8a}
+.field .err-msg{font-size:.7rem;color:#ff6b8a;margin-top:.25rem;display:none}
+.field.error .err-msg{display:block}
+
+.toast{
+  position:fixed;top:2rem;left:50%;transform:translateX(-50%) translateY(-20px);
+  background:#1a1a2e;border:1px solid var(--cyan);color:var(--text);
+  font-size:.82rem;padding:.8rem 1.5rem;border-radius:100px;
+  opacity:0;transition:opacity .4s,transform .4s;pointer-events:none;z-index:99;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body>
+
+<div class="form-wrap">
+  <div class="form-header">
+    <div class="logo"><span class="a">R</span>ank<span class="a">P</span>ulse</div>
+    <h1>Richiedi accesso pilota</h1>
+    <p>Compila il modulo, ti contatteremo al più presto.</p>
+  </div>
+  <form id="pilotForm" novalidate>
+    <div class="row">
+      <div class="field" data-validate="required">
+        <label>Nome <span class="req">*</span></label>
+        <input type="text" name="nome" autocomplete="given-name"/>
+        <div class="err-msg">Inserisci il tuo nome</div>
+      </div>
+      <div class="field" data-validate="required">
+        <label>Cognome <span class="req">*</span></label>
+        <input type="text" name="cognome" autocomplete="family-name"/>
+        <div class="err-msg">Inserisci il tuo cognome</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Azienda</label>
+      <input type="text" name="azienda" autocomplete="organization"/>
+    </div>
+    <div class="field">
+      <label>Ruolo lavorativo</label>
+      <input type="text" name="ruolo"/>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Telefono</label>
+        <input type="tel" name="telefono" autocomplete="tel"/>
+      </div>
+      <div class="field" data-validate="required">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" name="email" autocomplete="email"/>
+        <div class="err-msg">Inserisci un indirizzo email valido</div>
+      </div>
+    </div>
+    <div class="field" data-validate="required">
+      <label>Messaggio <span class="req">*</span></label>
+      <textarea name="messaggio" rows="4"></textarea>
+      <div class="err-msg">Inserisci un messaggio</div>
+    </div>
+    <button type="submit" class="btn-submit">Invia richiesta</button>
+  </form>
+  <a href="index.html" class="back-link">&larr; Torna alla home</a>
+</div>
+
+<div class="toast" id="toast">Richiesta inviata con successo!</div>
+
+<script>
+(function(){
+  'use strict';
+  var form=document.getElementById('pilotForm');
+  var toast=document.getElementById('toast');
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var valid=true;
+    var fields=form.querySelectorAll('.field[data-validate]');
+    fields.forEach(function(f){
+      var input=f.querySelector('input,textarea');
+      var val=input.value.trim();
+      var ok=true;
+      if(f.dataset.validate==='required'&&val==='') ok=false;
+      if(f.dataset.validate==='required'&&input.type==='email'&&val!==''){
+        ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      }
+      f.classList.toggle('error',!ok);
+      if(!ok) valid=false;
+    });
+    if(!valid) return;
+    toast.classList.add('show');
+    form.reset();
+    setTimeout(function(){toast.classList.remove('show')},3000);
+  });
+
+  form.querySelectorAll('.field').forEach(function(f){
+    var input=f.querySelector('input,textarea');
+    input.addEventListener('input',function(){f.classList.remove('error')});
+  });
+})();
+</script>
+</body>
+</html>
