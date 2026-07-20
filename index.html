@@ -137,18 +137,18 @@ html.lenis,html.lenis body{height:auto}
 'use strict';
 gsap.registerPlugin(ScrollTrigger);
 
-var V=['vid/data-viz.mp4','vid/plexus.mp4','vid/neon-particles.mp4','vid/particle-wave.mp4','vid/light-net.mp4','vid/neural-net.mp4','vid/digital-flow.mp4'];
+var V=['vid/data-viz.mp4','vid/plexus.mp4','vid/neon-particles.mp4','vid/particle-wave.mp4','vid/light-net.mp4','vid/neural-net.mp4','vid/digital-flow.mp4','vid/traffic-london.mp4','vid/sea-city.mp4','vid/glacier-snow.mp4','vid/wood-business.mp4','vid/colorful-animation.mp4'];
 var DATA=[
   {title:'Riprendi le redini del tuo budget con la nostra Dashboard',accent:'#00e5ff',tint:'rgba(0,229,255,0.08)',
-   vids:[V[0],V[1]],hero:true},
+   vids:[V[0],V[7]],hero:true},
   {title:'Dimentica\nle licenze Enterprise',accent:'#b48eff',tint:'rgba(180,142,255,0.08)',
-   vids:[V[2],V[3]],multiline:true},
+   vids:[V[2],V[8]],multiline:true},
   {title:'SEO pay-as-you-go',accent:'#c6ff1b',tint:'rgba(198,255,27,0.07)',
-   vids:[V[4],V[5]]},
+   vids:[V[4],V[9]]},
   {title:'Accuratezza assoluta\nCosti irrisori',accent:'#ffba6a',tint:'rgba(255,186,106,0.08)',
-   vids:[V[6],V[0]],multiline:true},
+   vids:[V[6],V[10]],multiline:true},
   {title:'White-Label Reports',accent:'#34d399',tint:'rgba(52,211,153,0.08)',
-   vids:[V[1],V[4]]},
+   vids:[V[1],V[11]]},
 ];
 
 var stack=document.getElementById('stack');
@@ -225,7 +225,7 @@ heroTitle.addEventListener('click',function(){window.location.href='form.html'})
 /* ============================================================
    VIDEO CROSSFADE — alternate between 2 videos every ~5s
    ============================================================ */
-var VID_INTERVAL=5000;
+var VID_INTERVAL=1200;
 doorSecs.forEach(function(ds){
   [ds.dL,ds.dR].forEach(function(door){
     var vids=door.querySelectorAll('video');
@@ -244,9 +244,9 @@ doorSecs.forEach(function(ds){
 /* ============================================================
    LENIS
    ============================================================ */
-var totalScroll=(N-1)*window.innerHeight;
+var totalScroll=(N-1)*window.innerHeight*0.5;
 var lenis=new Lenis({
-  duration:1.1,
+  duration:0.4,
   easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))},
   smoothWheel:true,
 });
@@ -273,9 +273,9 @@ for(var i=0;i<N-1;i++){
     var tl=gsap.timeline({
       scrollTrigger:{
         trigger:document.body,
-        start:idx*window.innerHeight,
-        end:(idx+1)*window.innerHeight,
-        scrub:0.3
+        start:idx*window.innerHeight*0.5,
+        end:(idx+1)*window.innerHeight*0.5,
+        scrub:0.15
       }
     });
 
